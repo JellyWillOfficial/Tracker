@@ -1,0 +1,21 @@
+venv/
+
+tracker/tracker/__pycache__/
+tracker/__pycache__/
+tracker/backend/__pycache__/
+tracker/backend/migrations/__pycache__/
+tracker/.vscode/launch.json
+tracker/db.sqlite3
+
+.vscode/*
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+*~
+*.swp
