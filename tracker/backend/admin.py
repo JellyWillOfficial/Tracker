@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import (
+    CategoriesOfSpending
+)
 
-# Register your models here.
+
+admin.site.register(CategoriesOfSpending)

@@ -1,10 +1,14 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
+from .serializers import (
+    UserSerializer, 
+    GroupSerializer,
+    CategoriesOfSpendingSerializer,
+    )
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -51,7 +55,25 @@ class RegistrationStaff(RegistrationView):
     is_superuser = True
 
 class RegistrationSuperUser(RegistrationView):
+    permission_classes = [permissions.IsAdminUser]
     is_superuser = True
 
 class RegistrationUser(RegistrationView):
     pass
+
+class CategoriesOfSpendingCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request):
+        serializer = CategoriesOfSpendingSerializer(
+            data=
+            {
+                'name': request.data['name'],
+                'owner': request.user.id
+            }
+        )
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print('is not valid')
+        serializer.save()
+        return Response(serializer.data)

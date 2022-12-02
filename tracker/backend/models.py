@@ -1,3 +1,19 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
-# Create your models here.
+
+class CategoriesOfSpending(models.Model):
+    """
+    Категории расходов, модель для категоризации статей расходов пользователя
+    """
+    name = models.CharField(max_length=50)
+    owner = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return '{}'.format(self.name)
+    
+    class Meta:
+        verbose_name = 'Категория расходов'
+        verbose_name_plural = 'Категории расходов'
