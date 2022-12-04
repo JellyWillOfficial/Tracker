@@ -28,27 +28,37 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class RegistrationView(APIView):
-    is_staff = False
-    is_superuser = False
+class CreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer = None
+    owner_exists = False
+    fields = []
     def post(self, request):
-        serializer = UserSerializer(
-            data=
-            {
-                'username': request.data['username'], 
-                'email': request.data['email'], 
-                'password': make_password(request.data['password']), 
-                'groups': request.data['groups'],
-                'is_staff': self.is_staff,
-                'is_superuser': self.is_superuser
-            }
-        )
+        dict_for_serializer = {}
+        for i in self.fields:
+            if i == 'password':
+                dict_for_serializer.update({'password': make_password(request.data['password'])})
+            elif i == 'is_staff':
+                dict_for_serializer.update({'is_staff': self.is_staff})
+            elif i == 'is_superuser':
+                dict_for_serializer.update({'is_superuser': self.is_superuser})
+            else:
+                dict_for_serializer.update({i: request.data[i]})
+        if self.owner_exists:
+            dict_for_serializer.update({'owner': request.user.id})
+        serializer = self.serializer(data=dict_for_serializer)
         if serializer.is_valid():
             serializer.save()
         else:
             print('is not valid')
         serializer.save()
         return Response(serializer.data)
+
+class RegistrationView(CreateView):
+    is_staff = False
+    is_superuser = False
+    serializer = UserSerializer
+    fields = ['username', 'email', 'password', 'groups', 'is_staff', 'is_superuser']
 
 class RegistrationStaff(RegistrationView):
     permission_classes = [permissions.IsAdminUser]
@@ -62,37 +72,12 @@ class RegistrationSuperUser(RegistrationView):
 class RegistrationUser(RegistrationView):
     pass
 
-class CategoriesOfSpendingCreateView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    def post(self, request):
-        serializer = CategoriesOfSpendingSerializer(
-            data=
-            {
-                'name': request.data['name'],
-                'owner': request.user.id
-            }
-        )
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            print('is not valid')
-        serializer.save()
-        return Response(serializer.data)
+class CategoriesOfSpendingCreateView(CreateView):
+    serializer = CategoriesOfSpendingSerializer
+    owner_exists = True
+    fields = ['name']
 
-
-class NameOfStoresCreateView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    def post(self, request):
-        serializer = NameOfStores(
-            data=
-            {
-                'name': request.data['name'],
-                'owner': request.user.id
-            }
-        )
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            print('is not valid')
-        serializer.save()
-        return Response(serializer.data)
+class NameOfStoresCreateView(CreateView):
+    serializer = NameOfStores
+    owner_exists = True
+    fields = ['name']
