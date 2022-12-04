@@ -1,7 +1,9 @@
 from django.contrib import admin
 from .models import (
-    CategoriesOfSpending
+    CategoriesOfSpending,
+    NameOfStores
 )
 
 
 admin.site.register(CategoriesOfSpending)
+admin.site.register(NameOfStores)

@@ -8,6 +8,7 @@ from .serializers import (
     UserSerializer, 
     GroupSerializer,
     CategoriesOfSpendingSerializer,
+    NameOfStores,
     )
 
 
@@ -65,6 +66,24 @@ class CategoriesOfSpendingCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         serializer = CategoriesOfSpendingSerializer(
+            data=
+            {
+                'name': request.data['name'],
+                'owner': request.user.id
+            }
+        )
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print('is not valid')
+        serializer.save()
+        return Response(serializer.data)
+
+
+class NameOfStoresCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request):
+        serializer = NameOfStores(
             data=
             {
                 'name': request.data['name'],

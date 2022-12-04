@@ -6,6 +6,7 @@ from .views import (
     RegistrationSuperUser,
     RegistrationUser,
     CategoriesOfSpendingCreateView,
+    NameOfStoresCreateView,
     )
 
 router = routers.DefaultRouter()
@@ -20,5 +21,6 @@ urlpatterns = [
     path('api/registrarion/superuser/',RegistrationSuperUser.as_view()),
     path('api/registrarion/user/',RegistrationUser.as_view()),
     path('api/create/category-of-spending/', CategoriesOfSpendingCreateView.as_view()),
+    path('api/create/name-of-stories/', NameOfStoresCreateView.as_view()),
     path('', include(router.urls)),
 ]

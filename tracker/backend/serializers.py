@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from .models import (
     CategoriesOfSpending,
+    NameOfStores,
 )
 
 
@@ -20,4 +21,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class CategoriesOfSpendingSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoriesOfSpending
+        fields = ['name', 'owner']
+
+class NameOfStores(serializers.ModelSerializer):
+    class Meta:
+        model = NameOfStores
         fields = ['name', 'owner']
