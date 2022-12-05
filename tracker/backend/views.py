@@ -8,7 +8,8 @@ from .serializers import (
     UserSerializer, 
     GroupSerializer,
     CategoriesOfSpendingSerializer,
-    NameOfStores,
+    NameOfStoresSerializer,
+    SpendingSerializer,
     )
 
 
@@ -78,6 +79,11 @@ class CategoriesOfSpendingCreateView(CreateView):
     fields = ['name']
 
 class NameOfStoresCreateView(CreateView):
-    serializer = NameOfStores
+    serializer = NameOfStoresSerializer
     owner_exists = True
     fields = ['name']
+
+class SpendingCreateView(CreateView):
+    serializer = SpendingSerializer
+    owner_exists = True
+    fields = ['date', 'name', 'price', 'weight', 'category', 'store', 'significance']

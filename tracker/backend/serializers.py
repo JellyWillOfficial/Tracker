@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 from .models import (
     CategoriesOfSpending,
     NameOfStores,
+    Spending,
 )
 
 
@@ -23,7 +24,12 @@ class CategoriesOfSpendingSerializer(serializers.ModelSerializer):
         model = CategoriesOfSpending
         fields = ['name', 'owner']
 
-class NameOfStores(serializers.ModelSerializer):
+class NameOfStoresSerializer(serializers.ModelSerializer):
     class Meta:
         model = NameOfStores
         fields = ['name', 'owner']
+
+class SpendingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Spending
+        fields = ['owner', 'date', 'name', 'price', 'weight', 'category', 'store', 'significance']
