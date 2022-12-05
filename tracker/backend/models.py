@@ -18,7 +18,7 @@ class CategoriesOfSpending(models.Model):
         verbose_name = 'Категория расходов'
         verbose_name_plural = 'Категории расходов'
 
-class NameOfStores(models.Model):
+class StoreNames(models.Model):
     """
     Название магазинов, модель для отслеживания магазина где была произведена трата средств
     """
@@ -54,7 +54,7 @@ class Spending(models.Model):
         CategoriesOfSpending, on_delete=models.SET_NULL, blank=True, null=True, default=None
     )
     store = models.ForeignKey(
-        NameOfStores, on_delete=models.SET_NULL, blank=True, null=True, default=None
+        StoreNames, on_delete=models.SET_NULL, blank=True, null=True, default=None
     )
     significance = models.CharField(max_length=1, choices=DEGREES)
 

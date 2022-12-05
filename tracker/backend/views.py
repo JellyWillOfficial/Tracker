@@ -8,7 +8,7 @@ from .serializers import (
     UserSerializer, 
     GroupSerializer,
     CategoriesOfSpendingSerializer,
-    NameOfStoresSerializer,
+    StoreNamesSerializer,
     SpendingSerializer,
     )
 
@@ -32,11 +32,13 @@ class GroupViewSet(viewsets.ModelViewSet):
 class CreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer = None
-    owner_exists = False
     fields = []
     def post(self, request):
         dict_for_serializer = {}
         for i in self.fields:
+            if i == 'owner':
+                dict_for_serializer.update({'owner': request.user.id})
+                continue
             if i not in request.data.keys():
                 continue
             if i == 'password':
@@ -47,13 +49,9 @@ class CreateView(APIView):
                 dict_for_serializer.update({'is_superuser': self.is_superuser})
             else:
                 dict_for_serializer.update({i: request.data[i]})
-        if self.owner_exists:
-            dict_for_serializer.update({'owner': request.user.id})
         serializer = self.serializer(data=dict_for_serializer)
         if serializer.is_valid():
             serializer.save()
-        else:
-            print('is not valid')
         serializer.save()
         return Response(serializer.data)
 
@@ -77,15 +75,12 @@ class RegistrationUser(RegistrationView):
 
 class CategoriesOfSpendingCreateView(CreateView):
     serializer = CategoriesOfSpendingSerializer
-    owner_exists = True
-    fields = ['name']
+    fields = ['owner', 'name']
 
-class NameOfStoresCreateView(CreateView):
-    serializer = NameOfStoresSerializer
-    owner_exists = True
-    fields = ['name']
+class StoreNamesCreateView(CreateView):
+    serializer = StoreNamesSerializer
+    fields = ['owner', 'name']
 
 class SpendingCreateView(CreateView):
     serializer = SpendingSerializer
-    owner_exists = True
-    fields = ['date', 'name', 'price', 'weight', 'category', 'store', 'significance']
+    fields = ['owner', 'date', 'name', 'price', 'weight', 'category', 'store', 'significance']
