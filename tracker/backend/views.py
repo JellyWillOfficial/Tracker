@@ -37,6 +37,8 @@ class CreateView(APIView):
     def post(self, request):
         dict_for_serializer = {}
         for i in self.fields:
+            if i not in request.data.keys():
+                continue
             if i == 'password':
                 dict_for_serializer.update({'password': make_password(request.data['password'])})
             elif i == 'is_staff':
