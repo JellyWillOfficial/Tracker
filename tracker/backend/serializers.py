@@ -33,3 +33,4 @@ class SpendingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spending
         fields = ['owner', 'date', 'name', 'price', 'weight', 'category', 'store', 'significance']
+        depth = 1

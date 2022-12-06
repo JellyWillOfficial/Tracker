@@ -14,6 +14,7 @@ from .serializers import (
 from .models import (
     CategoriesOfSpending,
     StoreNames,
+    Spending,
 )
 
 
@@ -101,4 +102,11 @@ class GetAllStoreNamesOfUserView(APIView):
     def get(self, request):
         lines = StoreNames.objects.filter(owner=request.user.id)
         serializer = StoreNamesSerializer(lines, many=True)
+        return Response(serializer.data)
+
+class GetAllSpendingOfUserView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        lines = Spending.objects.filter(owner=request.user.id)
+        serializer = SpendingSerializer(lines, many=True)
         return Response(serializer.data)

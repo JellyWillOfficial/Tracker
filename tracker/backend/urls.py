@@ -10,6 +10,7 @@ from .views import (
     SpendingCreateView,
     GetAllCategoriesOfSpendingOfUserView,
     GetAllStoreNamesOfUserView,
+    GetAllSpendingOfUserView,
 )
 
 router = routers.DefaultRouter()
@@ -28,5 +29,6 @@ urlpatterns = [
     path('api/spending/create/', SpendingCreateView.as_view()),
     path('api/categories-of-spending/display/categories/all/', GetAllCategoriesOfSpendingOfUserView.as_view()),
     path('api/store-names/display/stores/all/', GetAllStoreNamesOfUserView.as_view()),
+    path('api/spending/display/spending/all/', GetAllSpendingOfUserView.as_view()),
     path('', include(router.urls)),
 ]
