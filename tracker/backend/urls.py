@@ -8,7 +8,8 @@ from .views import (
     CategoriesOfSpendingCreateView,
     StoreNamesCreateView,
     SpendingCreateView,
-    )
+    GetAllCategoriesOfSpendingOfUserView,
+)
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -24,5 +25,6 @@ urlpatterns = [
     path('api/create/category-of-spending/', CategoriesOfSpendingCreateView.as_view()),
     path('api/create/store-names/', StoreNamesCreateView.as_view()),
     path('api/create/spending/', SpendingCreateView.as_view()),
+    path('api/display/categories/all/', GetAllCategoriesOfSpendingOfUserView.as_view()),
     path('', include(router.urls)),
 ]

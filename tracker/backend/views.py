@@ -10,7 +10,10 @@ from .serializers import (
     CategoriesOfSpendingSerializer,
     StoreNamesSerializer,
     SpendingSerializer,
-    )
+)
+from .models import (
+    CategoriesOfSpending,
+)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -84,3 +87,10 @@ class StoreNamesCreateView(CreateView):
 class SpendingCreateView(CreateView):
     serializer = SpendingSerializer
     fields = ['owner', 'date', 'name', 'price', 'weight', 'category', 'store', 'significance']
+
+class GetAllCategoriesOfSpendingOfUserView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        lines = CategoriesOfSpending.objects.filter(owner=request.user.id)
+        serializer = CategoriesOfSpendingSerializer(lines, many=True)
+        return Response(serializer.data)
