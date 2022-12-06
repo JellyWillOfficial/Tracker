@@ -22,7 +22,7 @@ urlpatterns = [
     path('api/registrarion/staff/',RegistrationStaff.as_view()),
     path('api/registrarion/superuser/',RegistrationSuperUser.as_view()),
     path('api/registrarion/user/',RegistrationUser.as_view()),
-    path('api/create/category-of-spending/', CategoriesOfSpendingCreateView.as_view()),
+    path('api/create/categories-of-spending/', CategoriesOfSpendingCreateView.as_view()),
     path('api/create/store-names/', StoreNamesCreateView.as_view()),
     path('api/create/spending/', SpendingCreateView.as_view()),
     path('api/display/categories/all/', GetAllCategoriesOfSpendingOfUserView.as_view()),
