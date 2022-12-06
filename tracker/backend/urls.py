@@ -22,9 +22,9 @@ urlpatterns = [
     path('api/registrarion/staff/',RegistrationStaff.as_view()),
     path('api/registrarion/superuser/',RegistrationSuperUser.as_view()),
     path('api/registrarion/user/',RegistrationUser.as_view()),
-    path('api/create/categories-of-spending/', CategoriesOfSpendingCreateView.as_view()),
-    path('api/create/store-names/', StoreNamesCreateView.as_view()),
-    path('api/create/spending/', SpendingCreateView.as_view()),
-    path('api/display/categories/all/', GetAllCategoriesOfSpendingOfUserView.as_view()),
+    path('api/categories-of-spending/create/', CategoriesOfSpendingCreateView.as_view()),
+    path('api/store-names/create/', StoreNamesCreateView.as_view()),
+    path('api/spending/create/', SpendingCreateView.as_view()),
+    path('api/categories-of-spending/display/categories/all/', GetAllCategoriesOfSpendingOfUserView.as_view()),
     path('', include(router.urls)),
 ]
