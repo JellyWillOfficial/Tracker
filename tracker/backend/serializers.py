@@ -22,15 +22,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class CategoriesOfSpendingSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoriesOfSpending
-        fields = ['name', 'owner']
+        exclude = []
 
 class StoreNamesSerializer(serializers.ModelSerializer):
     class Meta:
         model = StoreNames
-        fields = ['name', 'owner']
+        exclude = []
 
 class SpendingSerializer(serializers.ModelSerializer):
+    category = CategoriesOfSpendingSerializer(many=False, read_only=True)
+    store = StoreNamesSerializer(many=False, read_only=True)
     class Meta:
         model = Spending
-        fields = ['owner', 'date', 'name', 'price', 'weight', 'category', 'store', 'significance']
-        depth = 1
+        exclude = []
