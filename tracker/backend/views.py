@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User, Group
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.views import APIView
@@ -109,4 +110,15 @@ class GetAllSpendingOfUserView(APIView):
     def get(self, request):
         lines = Spending.objects.filter(owner=request.user.id)
         serializer = SpendingSerializer(lines, many=True)
+        return Response(serializer.data)
+
+class CategoryOfSpendingPutView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def put(self, request, pk):
+        saved_category = get_object_or_404(CategoriesOfSpending.objects.all(), pk=pk)
+        dict_for_serializer = {'owner': request.user.id, 'name': request.data['name']}
+        serializer = CategoriesOfSpendingSerializer(saved_category, data=dict_for_serializer)
+        if serializer.is_valid():
+            serializer.save()
+        serializer.save()
         return Response(serializer.data)
