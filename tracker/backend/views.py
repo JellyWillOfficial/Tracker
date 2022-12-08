@@ -122,3 +122,10 @@ class CategoryOfSpendingPutView(APIView):
             serializer.save()
         serializer.save()
         return Response(serializer.data)
+
+class CategoryOfSpendingDeleteView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def delete(self, request, pk):
+        saved_category = get_object_or_404(CategoriesOfSpending.objects.all(), pk=pk)
+        saved_category.delete()
+        return Response()
