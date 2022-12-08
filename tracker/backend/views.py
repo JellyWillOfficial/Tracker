@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User, Group
+from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -129,3 +130,13 @@ class CategoryOfSpendingDeleteView(APIView):
         saved_category = get_object_or_404(CategoriesOfSpending.objects.all(), pk=pk)
         saved_category.delete()
         return Response()
+
+class CategoryOfSpendingDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, pk):
+        saved_category = get_object_or_404(CategoriesOfSpending.objects.all(), pk=pk)
+        if saved_category.owner.id == request.user.id:
+            serializer = StoreNamesSerializer(saved_category)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)

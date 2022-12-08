@@ -13,6 +13,7 @@ from .views import (
     GetAllSpendingOfUserView,
     CategoryOfSpendingPutView,
     CategoryOfSpendingDeleteView,
+    CategoryOfSpendingDetailView,
 )
 
 router = routers.DefaultRouter()
@@ -34,5 +35,6 @@ urlpatterns = [
     path('api/spending/display/spending/all/', GetAllSpendingOfUserView.as_view()),
     path('api/categories-of-spending/update/categories/<int:pk>/', CategoryOfSpendingPutView.as_view()),
     path('api/categories-of-spending/delete/categories/<int:pk>/', CategoryOfSpendingDeleteView.as_view()),
+    path('api/categories-of-spending/detail/categories/<int:pk>/', CategoryOfSpendingDetailView.as_view()),
     path('', include(router.urls)),
 ]
